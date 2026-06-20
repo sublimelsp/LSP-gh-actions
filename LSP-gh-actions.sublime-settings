@@ -20,7 +20,7 @@
 			"missingInputsQuickfix": false,
 		},
 		// Optional user agent to use when making calls to github.com.
-		"userAgent": "Sublime Text LSP-actions",
+		"userAgent": "Sublime Text LSP-gh-actions",
 		// If a GitHub Enterprise Server should be used, the URL of the API endpoint, eg "https://ghe.my-company.com/api/v3".
 		"gitHubApiUrl": null,
 	},
@@ -35,6 +35,6 @@
 		"${server_path}",
 		"--stdio"
 	],
-	// Support is additionally restricted based on path (only enabled for ".github/workflows/*")
-	"selector": "source.yml | source.yaml",
+	// Requires https://packagecontrol.io/packages/YamlPipelines package.
+	"selector": "source.yaml.pipeline.github-actions",
 }

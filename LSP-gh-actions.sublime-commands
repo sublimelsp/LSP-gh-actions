@@ -1,0 +1,10 @@
+[
+    {
+        "caption": "Preferences: LSP-gh-actions Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/LSP-gh-actions/LSP-gh-actions.sublime-settings",
+            "default": "// Settings in here override those in \"LSP-gh-actions/LSP-gh-actions.sublime-settings\"\n\n{\n\t$0\n}\n",
+        },
+    }
+]

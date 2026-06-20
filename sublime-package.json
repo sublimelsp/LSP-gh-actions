@@ -3,10 +3,10 @@
     "settings": [
       {
         "file_patterns": [
-          "/LSP-actions.sublime-settings"
+          "/LSP-gh-actions.sublime-settings"
         ],
         "schema": {
-          "$id": "sublime://settings/LSP-actions",
+          "$id": "sublime://settings/LSP-gh-actions",
           "definitions": {
             "ExperimentalFeatures": {
               "properties": {
@@ -144,7 +144,7 @@
               "$ref": "sublime://settings/LSP-plugin-base"
             },
             {
-              "$ref": "sublime://settings/LSP-actions#/definitions/PluginConfig"
+              "$ref": "sublime://settings/LSP-gh-actions#/definitions/PluginConfig"
             }
           ],
         }
@@ -159,8 +159,8 @@
               "properties": {
                 "LSP": {
                   "properties": {
-                    "LSP-actions": {
-                      "$ref": "sublime://settings/LSP-actions#/definitions/PluginConfig"
+                    "LSP-gh-actions": {
+                      "$ref": "sublime://settings/LSP-gh-actions#/definitions/PluginConfig"
                     }
                   }
                 }
