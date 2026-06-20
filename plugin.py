@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from LSP.plugin import IsApplicableContext
 from LSP.plugin import LspPlugin
 from LSP.plugin import OnPreStartContext
 from LSP.plugin import parse_uri
@@ -37,11 +36,6 @@ class ReadFileParams(TypedDict):
 class LspActionsPlugin(LspPlugin):
 
     @classmethod
-    def is_applicable_async(cls, context: IsApplicableContext) -> bool:
-        file_path = context.view.file_name()
-        return super().is_applicable_async(context) and (not file_path or is_github_workflow_file(Path(file_path)))
-
-    @classmethod
     @override
     def on_pre_start_async(cls, context: OnPreStartContext) -> None:
         package_name = cls.plugin_storage_path.name
@@ -71,13 +65,6 @@ def plugin_loaded() -> None:
 
 def plugin_unloaded() -> None:
     LspActionsPlugin.unregister()
-
-
-def is_github_workflow_file(path: Path) -> bool:
-    fragment_parts = ('.github', 'workflows')
-    fragments_len = len(fragment_parts)
-    path_parts = path.parts
-    return any(path_parts[i:i + fragments_len] == fragment_parts for i in range(len(path_parts) - fragments_len + 1))
 
 
 def get_github_token() -> str | None:
