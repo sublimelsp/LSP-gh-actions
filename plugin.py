@@ -5,15 +5,21 @@ from LSP.plugin import OnPreStartContext
 from LSP.plugin import parse_uri
 from LSP.plugin import Promise
 from LSP.plugin import request_handler
+from LSP.plugin import Session
 from LSP.plugin import WorkspaceFolder
 from lsp_utils import NodeManager
 from lsp_utils.helpers import run_command_sync
 from pathlib import Path
 from sublime_lib import ResourcePath
 from typing import final
+from typing import TYPE_CHECKING
 from typing import TypedDict
 from typing_extensions import override
 import re
+import shutil
+
+if TYPE_CHECKING:
+    from weakref import ref
 
 
 class RepoInfo(TypedDict):
@@ -34,6 +40,7 @@ class ReadFileParams(TypedDict):
 
 @final
 class LspActionsPlugin(LspPlugin):
+    is_gh_present = False
 
     @classmethod
     @override
@@ -46,9 +53,16 @@ class LspActionsPlugin(LspPlugin):
             Path('node_modules', '@actions', 'languageserver', 'bin', 'actions-languageserver'),
             node_version_requirement='>=20',
         )
-        if not context.configuration.initialization_options.get('sessionToken'):
+        cls.is_gh_present = bool(shutil.which('gh'))
+        if cls.is_gh_present and not context.configuration.initialization_options.get('sessionToken'):
             context.configuration.initialization_options.set('sessionToken', get_github_token())
-        context.configuration.initialization_options.set('repos', get_repos_configs(context.workspace_folders))
+        context.configuration.initialization_options.set('repos', get_repos_configs(context.workspace_folders,
+                                                                                    is_gh_present=cls.is_gh_present))
+
+    def __init__(self, weaksession: ref[Session]) -> None:
+        super().__init__(weaksession)
+        if not self.is_gh_present and (session := weaksession()):
+            session.set_config_status_async('missing gh')
 
     @request_handler('actions/readFile')
     def handle_read_file(self, params: ReadFileParams) -> Promise[str]:
@@ -72,7 +86,7 @@ def get_github_token() -> str | None:
     return token
 
 
-def get_repos_configs(workspace_folders: list[WorkspaceFolder]) -> list[Repo]:
+def get_repos_configs(workspace_folders: list[WorkspaceFolder], *, is_gh_present: bool) -> list[Repo]:
     configs: list[Repo] = []
     for index, folder in enumerate(workspace_folders):
         git_root, _ = run_command_sync(['git', 'rev-parse', '--show-toplevel'], cwd=folder.path)
@@ -84,7 +98,7 @@ def get_repos_configs(workspace_folders: list[WorkspaceFolder]) -> list[Repo]:
         owner, name = parse_github_remote(remote_url)
         if not owner or not name:
             continue
-        info = get_repo_info(owner, name, git_root)
+        info = is_gh_present and get_repo_info(owner, name, git_root)
         configs.append(
             {
                 'id': index,
