@@ -62,7 +62,7 @@ class LspActionsPlugin(LspPlugin):
     def __init__(self, weaksession: ref[Session]) -> None:
         super().__init__(weaksession)
         if not self.is_gh_present and (session := weaksession()):
-            session.set_config_status_async('missing gh')
+            session.set_config_status_async('no gh')
 
     @request_handler('actions/readFile')
     def handle_read_file(self, params: ReadFileParams) -> Promise[str]:
