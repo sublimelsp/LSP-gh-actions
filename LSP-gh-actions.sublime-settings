@@ -1,0 +1,40 @@
+{
+	"initialization_options": {
+		// GitHub token that will be used to retrieve additional information from github.com.
+		// Requires the `repo` and `workflow` scopes.
+		// NOTE: By default, if the token is not set, package tries to retrieve it from locally installed `gh` CLI.
+		"sessionToken": null,
+		// List of repositories that the language server should be aware of.
+		// NOTE: This setting is automatically populated from currently open workspace.
+		"repos": [],
+		// Desired log level.
+		"logLevel": 2,
+		// Experimental features that are opt-in.
+		"experimentalFeatures": {
+			"all": false,
+			"allowBackgroundSteps": false,
+			"allowCaseFunction": true,
+			"allowConcurrencyQueue": false,
+			"allowCopilotRequestsPermission": false,
+			"blockScalarChompingWarning": false,
+			"missingInputsQuickfix": false,
+		},
+		// Optional user agent to use when making calls to github.com.
+		"userAgent": "Sublime Text LSP-gh-actions",
+		// If a GitHub Enterprise Server should be used, the URL of the API endpoint, eg "https://ghe.my-company.com/api/v3".
+		"gitHubApiUrl": null,
+	},
+	// The path to the server binary used to start the language server.
+	// Use `auto` for the package to manage (install/update) the server automatically.
+	// NOTE: Change this instead of directly updating `command` - the `${server_path}` variable is dynamically resolved based on this setting.
+	// WARNING: Override at your own risk - using a custom binary can cause compatibility issues with server settings.
+	"server_path": "auto",
+	// Open "Preferences: LSP Utils Settings" from the Command Palette to customize the Node runtime.
+	"command": [
+		"${node_bin}",
+		"${server_path}",
+		"--stdio"
+	],
+	// Requires https://packagecontrol.io/packages/YamlPipelines package.
+	"selector": "source.yaml.pipeline.github-actions",
+}

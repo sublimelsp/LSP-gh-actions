@@ -1,0 +1,174 @@
+{
+  "contributions": {
+    "settings": [
+      {
+        "file_patterns": [
+          "/LSP-gh-actions.sublime-settings"
+        ],
+        "schema": {
+          "$id": "sublime://settings/LSP-gh-actions",
+          "definitions": {
+            "ExperimentalFeatures": {
+              "properties": {
+                "all": {
+                  "type": "boolean",
+                  "default": false,
+                  "markdownDescription": "Enable all experimental features. Individual feature flags take precedence over this setting."
+                },
+                "missingInputsQuickfix": {
+                  "type": "boolean",
+                  "default": false,
+                  "markdownDescription": "Enable quickfix code action for missing required action inputs."
+                },
+                "blockScalarChompingWarning": {
+                  "type": "boolean",
+                  "default": false,
+                  "markdownDescription": "Warn when block scalars (| or >) use implicit clip chomping, which adds a trailing newline that may be unintentional."
+                },
+                "allowCaseFunction": {
+                  "type": "boolean",
+                  "default": false,
+                  "markdownDescription": "Enable the case() function in expressions."
+                },
+                "allowCopilotRequestsPermission": {
+                  "type": "boolean",
+                  "default": false,
+                  "markdownDescription": "Enable the copilot-requests permission in workflow permissions."
+                },
+                "allowConcurrencyQueue": {
+                  "type": "boolean",
+                  "default": false,
+                  "markdownDescription": "Enable the queue property in workflow concurrency settings."
+                },
+                "allowBackgroundSteps": {
+                  "type": "boolean",
+                  "default": false,
+                  "markdownDescription": "Enable background workflow steps and related wait/cancel steps."
+                },
+              }
+            },
+            "RepositoryContext": {
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "description": "Repository ID"
+                },
+                "owner": {
+                  "type": "string",
+                  "description": "Repository owner"
+                },
+                "organizationOwned": {
+                  "type": "boolean",
+                  "description": "Indicates if the repository is owned by an organization"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Repository name"
+                },
+                "workspaceUri": {
+                  "type": "string",
+                  "description": "Local workspace uri"
+                },
+              }
+            },
+            "PluginConfig": {
+              "properties": {
+                "server_path": {
+                  "type": "string",
+                  "default": "auto",
+                  "markdownDescription": "The path to the server binary to use for starting the language server. Use `auto` for the package to manage (install/update) server automatically.\n\n> [!NOTE]\n> Change this instead of directly updating `command` - the `${server_path}` variable is dynamically resolved based on this setting.\n\n> [!WARNING]\n> Using custom binary could result in package settings not matching what server supports."
+                },
+                "initialization_options": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "sessionToken": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "default": null,
+                      "markdownDescription": "GitHub token that will be used to retrieve additional information from github.com.\n\nRequires the `repo` and `workflow` scopes.",
+                    },
+                    "repos": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/RepositoryContext"
+                      },
+                      "default": [],
+                      "description": "List of repositories that the language server should be aware of."
+                    },
+                    "logLevel": {
+                      "enum": [
+                        0,
+                        1,
+                        2,
+                        3
+                      ],
+                      "markdownEnumDescriptions": [
+                        "Debug",
+                        "Info",
+                        "Warn",
+                        "Error"
+                      ],
+                      "default": 2,
+                      "description": "Desired log level."
+                    },
+                    "experimentalFeatures": {
+                      "$ref": "#/definitions/ExperimentalFeatures",
+                      "default": {},
+                      "description": "Experimental features that are opt-in."
+                    },
+                    "userAgent": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "default": null,
+                      "description": "Optional user agent to use when making calls to github.com."
+                    },
+                    "gitHubApiUrl": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "default": null,
+                      "markdownDescription": "If a GitHub Enterprise Server should be used, the URL of the API endpoint, eg `\"https://ghe.my-company.com/api/v3\"`"
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "allOf": [
+            {
+              "$ref": "sublime://settings/LSP-plugin-base"
+            },
+            {
+              "$ref": "sublime://settings/LSP-gh-actions#/definitions/PluginConfig"
+            }
+          ],
+        }
+      },
+      {
+        "file_patterns": [
+          "/*.sublime-project"
+        ],
+        "schema": {
+          "properties": {
+            "settings": {
+              "properties": {
+                "LSP": {
+                  "properties": {
+                    "LSP-gh-actions": {
+                      "$ref": "sublime://settings/LSP-gh-actions#/definitions/PluginConfig"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    ]
+  }
+}
