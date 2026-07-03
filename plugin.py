@@ -112,12 +112,14 @@ def get_repos_configs(workspace_folders: list[WorkspaceFolder], *, is_gh_present
 
 
 def parse_github_remote(url: str) -> tuple[str, str] | tuple[None, None]:
-    # SSH format: git@github.com:owner/repo.git
-    if match := re.search(r'git@github\.com:([^/]+)/([^/.]+)', url):
-        return match.group(1), match.group(2).removesuffix('.git')
-    # HTTPS format: https://github.com/owner/repo.git
-    if match := re.search(r'github\.com/([^/]+)/([^/.]+)', url):
-        return match.group(1), match.group(2).removesuffix('.git')
+    patterns = [
+        r'^git@github\.com:([^/]+)/(.+?)(?:\.git)?$',
+        r'^https://(?:www\.)?github\.com/([^/]+)/(.+?)(?:\.git)?$',
+    ]
+    for pattern in patterns:
+        if match := re.match(pattern, url):
+            owner, repo = match.groups()
+            return owner, repo
     return None, None
 
 
