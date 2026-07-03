@@ -117,7 +117,7 @@ def parse_github_remote(url: str) -> tuple[str, str] | tuple[None, None]:
         r'^https://(?:www\.)?github\.com/([^/]+)/(.+?)(?:\.git)?$',
     ]
     for pattern in patterns:
-        if match := re.match(pattern, url):
+        if match := re.search(pattern, url):
             owner, repo = match.groups()
             return owner, repo
     return None, None
