@@ -113,7 +113,7 @@ def get_repos_configs(workspace_folders: list[WorkspaceFolder], *, is_gh_present
 
 def parse_github_remote(url: str) -> tuple[str, str] | tuple[None, None]:
     patterns = [
-        r'^git@github\.com:([^/]+)/(.+?)(?:\.git)?$',
+        r'git@github\.com:([^/]+)/(.+?)(?:\.git)?$',
         r'^https://(?:www\.)?github\.com/([^/]+)/(.+?)(?:\.git)?$',
     ]
     for pattern in patterns:
