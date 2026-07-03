@@ -2,6 +2,11 @@
 
 GitHub Actions workflows language server provided through [`@actions/languageserver`](https://github.com/actions/languageservices/tree/main/languageserver).
 
+It provides schema validation for the workflow and action files (like `LSP-yaml`) but also, quoting from [`actions/languageservice`](https://github.com/actions/languageservices/tree/main/languageservice):
+
+- value providers which can dynamically add values to the schema, for example, the list of available labels for a repository when validating `runs-on`.
+- context providers which can dynamically provide available contexts used in expressions. For example, the contents of the `github.event` context for a given workflow file.
+
 ### Installation
 
 * Install [LSP](https://packagecontrol.io/packages/LSP) and `LSP-gh-actions` from Package Control.
