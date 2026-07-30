@@ -12,9 +12,8 @@
 		// Experimental features that are opt-in.
 		"experimentalFeatures": {
 			"all": false,
-			"allowBackgroundSteps": false,
+			"allowBackgroundSteps": true,
 			"allowCaseFunction": true,
-			"allowConcurrencyQueue": false,
 			"allowCopilotRequestsPermission": false,
 			"blockScalarChompingWarning": false,
 			"missingInputsQuickfix": false,
