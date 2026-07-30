@@ -35,11 +35,6 @@
                   "default": false,
                   "markdownDescription": "Enable the copilot-requests permission in workflow permissions."
                 },
-                "allowConcurrencyQueue": {
-                  "type": "boolean",
-                  "default": false,
-                  "markdownDescription": "Enable the queue property in workflow concurrency settings."
-                },
                 "allowBackgroundSteps": {
                   "type": "boolean",
                   "default": false,
