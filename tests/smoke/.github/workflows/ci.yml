@@ -1,0 +1,8 @@
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    unknown-key: value
+    steps:
+      - run: echo hello

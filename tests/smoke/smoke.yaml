@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/sublimelsp/lsp_smoke_test/v1/smoke.schema.json
+file: .github/workflows/ci.yml
+# Workflows are .yml files, so the syntax from YamlPipelines has to be assigned explicitly.
+syntax: source.yaml.pipeline.github-actions
+expected_diagnostics:
+  message: unknown-key
