@@ -13,4 +13,4 @@ jobs:
     with:
       # Provides the GitHub Actions workflow syntax.
       extra-packages: |
-        SublimeText/YamlPipelines@v
+        YamlPipelines
